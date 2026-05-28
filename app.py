@@ -19,9 +19,17 @@ items = [
 def get_items():
     return {"items": items}
 
+@app.get('/get-item/<string:name>')
+def get_item(name):
+    for item in items:
+        if name == item['name']:
+            return item
+    return {"message": "Item is not found"}
+
+
 @app.post("/add-items")
 def add_items():
     request_data = request.get_json() # it returns a python dictionary from the body
     items.append(request_data)
-    return {"items": items}
+    return {"message": "Item added successfully"}, 201
 
